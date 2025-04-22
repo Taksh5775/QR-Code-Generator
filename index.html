@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Multi-Feature QR Code Generator</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
+
+</head>
+<body>
+    <div class="container">
+        <h1 class="text-center my-4">Multi-Feature QR Code Generator</h1>
+        
+        <div class="row">
+            <div class="col-md-3">
+                <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+                    <button class="nav-link active" id="v-pills-link-tab" data-bs-toggle="pill" data-bs-target="#v-pills-link" type="button" role="tab">URL/Link</button>
+                    <button class="nav-link" id="v-pills-text-tab" data-bs-toggle="pill" data-bs-target="#v-pills-text" type="button" role="tab">Text</button>
+                    <button class="nav-link" id="v-pills-email-tab" data-bs-toggle="pill" data-bs-target="#v-pills-email" type="button" role="tab">Email</button>
+                    <button class="nav-link" id="v-pills-phone-tab" data-bs-toggle="pill" data-bs-target="#v-pills-phone" type="button" role="tab">Phone Call</button>
+                    <button class="nav-link" id="v-pills-sms-tab" data-bs-toggle="pill" data-bs-target="#v-pills-sms" type="button" role="tab">SMS</button>
+                    <button class="nav-link" id="v-pills-vcard-tab" data-bs-toggle="pill" data-bs-target="#v-pills-vcard" type="button" role="tab">V-Card</button>
+                    <button class="nav-link" id="v-pills-whatsapp-tab" data-bs-toggle="pill" data-bs-target="#v-pills-whatsapp" type="button" role="tab">WhatsApp</button>
+                    <button class="nav-link" id="v-pills-wifi-tab" data-bs-toggle="pill" data-bs-target="#v-pills-wifi" type="button" role="tab">Wi-Fi</button>
+                    <button class="nav-link" id="v-pills-pdf-tab" data-bs-toggle="pill" data-bs-target="#v-pills-pdf" type="button" role="tab">PDF</button>
+                    <button class="nav-link" id="v-pills-social-tab" data-bs-toggle="pill" data-bs-target="#v-pills-social" type="button" role="tab">Social Media</button>
+                    <button class="nav-link" id="v-pills-event-tab" data-bs-toggle="pill" data-bs-target="#v-pills-event" type="button" role="tab">Event</button>
+                    <button class="nav-link" id="v-pills-barcode-tab" data-bs-toggle="pill" data-bs-target="#v-pills-barcode" type="button" role="tab">2D Barcode</button>
+                </div>
+            </div>
+            <div class="col-md-9">
+                <div class="tab-content" id="v-pills-tabContent">
+
+                    <!-- Add this section below your existing tab content but above the QR result card -->
+<div class="card mt-3" id="customizationCard">
+    <div class="card-body">
+        <h5 class="card-title">QR Code Customization</h5>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="mb-3">
+                    <label for="qrShape" class="form-label">Shape Style:</label>
+                    <select class="form-select" id="qrShape">
+                        <option value="square">Square</option>
+                        <option value="rounded">Rounded</option>
+                        <option value="dot">Dots</option>
+                        <option value="circle">Circles</option>
+                    </select>
+                </div>
+                <div class="mb-3">
+                    <label for="qrColor" class="form-label">QR Color:</label>
+                    <input type="color" class="form-control form-control-color" id="qrColor" value="#000000">
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="mb-3">
+                    <label for="bgColor" class="form-label">Background Color:</label>
+                    <input type="color" class="form-control form-control-color" id="bgColor" value="#ffffff">
+                </div>
+                <div class="mb-3">
+                    <label for="errorCorrection" class="form-label">Error Correction:</label>
+                    <select class="form-select" id="errorCorrection">
+                        <option value="L">Low (7%)</option>
+                        <option value="M" selected>Medium (15%)</option>
+                        <option value="Q">Quartile (25%)</option>
+                        <option value="H">High (30%)</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="mb-3">
+            <label for="logoUpload" class="form-label">Logo Overlay (optional):</label>
+            <input type="file" class="form-control" id="logoUpload" accept="image/*">
+        </div>
+    </div>
+</div>
+
+
+                    <!-- URL/Link Tab -->
+                    <div class="tab-pane fade show active" id="v-pills-link" role="tabpanel">
+                        <div class="card">
+                            <div class="card-body">
+                                <h5 class="card-title">Generate QR Code for URL/Link</h5>
+                                <div class="mb-3">
+                                    <label for="urlInput" class="form-label">Enter URL:</label>
+                                    <input type="url" class="form-control" id="urlInput" placeholder="https://example.com">
+                                </div>
+                                <button class="btn btn-primary" onclick="generateQR('url')">Generate QR Code</button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Text Tab -->
+                    <div class="tab-pane fade" id="v-pills-text" role="tabpanel">
+                        <div class="card">
+                            <div class="card-body">
+                                <h5 class="card-title">Generate QR Code for Text</h5>
+                                <div class="mb-3">
+                                    <label for="textInput" class="form-label">Enter Text:</label>
+                                    <textarea class="form-control" id="textInput" rows="3" placeholder="Enter your text here"></textarea>
+                                </div>
+                                <button class="btn btn-primary" onclick="generateQR('text')">Generate QR Code</button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Email Tab -->
+                    <div class="tab-pane fade" id="v-pills-email" role="tabpanel">
+                        <div class="card">
+                            <div class="card-body">
+                                <h5 class="card-title">Generate QR Code for Email</h5>
+                                <div class="mb-3">
+                                    <label for="emailInput" class="form-label">Email Address:</label>
+                                    <input type="email" class="form-control" id="emailInput" placeholder="example@domain.com">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="emailSubject" class="form-label">Subject (optional):</label>
+                                    <input type="text" class="form-control" id="emailSubject" placeholder="Subject">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="emailBody" class="form-label">Body (optional):</label>
+                                    <textarea class="form-control" id="emailBody" rows="3" placeholder="Email body content"></textarea>
+                                </div>
+                                <button class="btn btn-primary" onclick="generateQR('email')">Generate QR Code</button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Phone Call Tab -->
+                    <div class="tab-pane fade" id="v-pills-phone" role="tabpanel">
+                        <div class="card">
+                            <div class="card-body">
+                                <h5 class="card-title">Generate QR Code for Phone Call</h5>
+                                <div class="mb-3">
+                                    <label for="phoneInput" class="form-label">Phone Number:</label>
+                                    <input type="tel" class="form-control" id="phoneInput" placeholder="+1234567890">
+                                </div>
+                                <button class="btn btn-primary" onclick="generateQR('phone')">Generate QR Code</button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- SMS Tab -->
+                    <div class="tab-pane fade" id="v-pills-sms" role="tabpanel">
+                        <div class="card">
+                            <div class="card-body">
+                                <h5 class="card-title">Generate QR Code for SMS</h5>
+                                <div class="mb-3">
+                                    <label for="smsPhoneInput" class="form-label">Phone Number:</label>
+                                    <input type="tel" class="form-control" id="smsPhoneInput" placeholder="+1234567890">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="smsMessage" class="form-label">Message:</label>
+                                    <textarea class="form-control" id="smsMessage" rows="3" placeholder="Your message here"></textarea>
+                                </div>
+                                <button class="btn btn-primary" onclick="generateQR('sms')">Generate QR Code</button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- V-Card Tab -->
+                    <div class="tab-pane fade" id="v-pills-vcard" role="tabpanel">
+                        <div class="card">
+                            <div class="card-body">
+                                <h5 class="card-title">Generate QR Code for V-Card</h5>
+                                <div class="row">
+                                    <div class="col-md-6 mb-3">
+                                        <label for="vcardFirstName" class="form-label">First Name:</label>
+                                        <input type="text" class="form-control" id="vcardFirstName">
+                                    </div>
+                                    <div class="col-md-6 mb-3">
+                                        <label for="vcardLastName" class="form-label">Last Name:</label>
+                                        <input type="text" class="form-control" id="vcardLastName">
+                                    </div>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="vcardOrg" class="form-label">Organization:</label>
+                                    <input type="text" class="form-control" id="vcardOrg">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="vcardTitle" class="form-label">Title:</label>
+                                    <input type="text" class="form-control" id="vcardTitle">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="vcardPhone" class="form-label">Phone:</label>
+                                    <input type="tel" class="form-control" id="vcardPhone">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="vcardEmail" class="form-label">Email:</label>
+                                    <input type="email" class="form-control" id="vcardEmail">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="vcardWebsite" class="form-label">Website:</label>
+                                    <input type="url" class="form-control" id="vcardWebsite">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="vcardAddress" class="form-label">Address:</label>
+                                    <textarea class="form-control" id="vcardAddress" rows="2"></textarea>
+                                </div>
+                                <button class="btn btn-primary" onclick="generateQR('vcard')">Generate QR Code</button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- WhatsApp Tab -->
+                    <div class="tab-pane fade" id="v-pills-whatsapp" role="tabpanel">
+                        <div class="card">
+                            <div class="card-body">
+                                <h5 class="card-title">Generate QR Code for WhatsApp</h5>
+                                <div class="mb-3">
+                                    <label for="whatsappPhone" class="form-label">Phone Number (with country code):</label>
+                                    <input type="tel" class="form-control" id="whatsappPhone" placeholder="+1234567890">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="whatsappMessage" class="form-label">Message (optional):</label>
+                                    <textarea class="form-control" id="whatsappMessage" rows="3" placeholder="Your message here"></textarea>
+                                </div>
+                                <button class="btn btn-primary" onclick="generateQR('whatsapp')">Generate QR Code</button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Wi-Fi Tab -->
+                    <div class="tab-pane fade" id="v-pills-wifi" role="tabpanel">
+                        <div class="card">
+                            <div class="card-body">
+                                <h5 class="card-title">Generate QR Code for Wi-Fi</h5>
+                                <div class="mb-3">
+                                    <label for="wifiSsid" class="form-label">Network SSID:</label>
+                                    <input type="text" class="form-control" id="wifiSsid" placeholder="Your WiFi name">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="wifiPassword" class="form-label">Password:</label>
+                                    <input type="password" class="form-control" id="wifiPassword" placeholder="WiFi password">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="wifiEncryption" class="form-label">Encryption Type:</label>
+                                    <select class="form-select" id="wifiEncryption">
+                                        <option value="WPA">WPA/WPA2</option>
+                                        <option value="WEP">WEP</option>
+                                        <option value="nopass">No encryption</option>
+                                    </select>
+                                </div>
+                                <div class="mb-3 form-check">
+                                    <input type="checkbox" class="form-check-input" id="wifiHidden">
+                                    <label class="form-check-label" for="wifiHidden">Hidden network</label>
+                                </div>
+                                <button class="btn btn-primary" onclick="generateQR('wifi')">Generate QR Code</button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- PDF Tab -->
+                    <div class="tab-pane fade" id="v-pills-pdf" role="tabpanel">
+                        <div class="card">
+                            <div class="card-body">
+                                <h5 class="card-title">Generate QR Code for PDF</h5>
+                                <div class="mb-3">
+                                    <label for="pdfUrl" class="form-label">PDF File URL:</label>
+                                    <input type="url" class="form-control" id="pdfUrl" placeholder="https://example.com/document.pdf">
+                                </div>
+                                <p class="text-muted">Note: The QR code will link to the PDF file. You need to upload your PDF to a web server first.</p>
+                                <button class="btn btn-primary" onclick="generateQR('pdf')">Generate QR Code</button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Social Media Tab -->
+                    <div class="tab-pane fade" id="v-pills-social" role="tabpanel">
+                        <div class="card">
+                            <div class="card-body">
+                                <h5 class="card-title">Generate QR Code for Social Media</h5>
+                                <div class="mb-3">
+                                    <label class="form-label">Select Platform:</label>
+                                    <select class="form-select" id="socialPlatform">
+                                        <option value="facebook">Facebook</option>
+                                        <option value="twitter">Twitter</option>
+                                        <option value="instagram">Instagram</option>
+                                        <option value="linkedin">LinkedIn</option>
+                                        <option value="youtube">YouTube</option>
+                                        <option value="tiktok">TikTok</option>
+                                    </select>
+                                </div>
+                                <div class="mb-3" id="socialUsernameField">
+                                    <label for="socialUsername" class="form-label">Username/Profile URL:</label>
+                                    <input type="text" class="form-control" id="socialUsername" placeholder="username or profile URL">
+                                </div>
+                                <div class="mb-3 d-none" id="socialPostField">
+                                    <label for="socialPostUrl" class="form-label">Post URL:</label>
+                                    <input type="url" class="form-control" id="socialPostUrl" placeholder="https://...">
+                                </div>
+                                <div class="form-check mb-3">
+                                    <input class="form-check-input" type="checkbox" id="socialIsUrl">
+                                    <label class="form-check-label" for="socialIsUrl">I'm entering a full URL</label>
+                                </div>
+                                <button class="btn btn-primary" onclick="generateQR('social')">Generate QR Code</button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Event Tab -->
+                    <div class="tab-pane fade" id="v-pills-event" role="tabpanel">
+                        <div class="card">
+                            <div class="card-body">
+                                <h5 class="card-title">Generate QR Code for Event</h5>
+                                <div class="mb-3">
+                                    <label for="eventTitle" class="form-label">Event Title:</label>
+                                    <input type="text" class="form-control" id="eventTitle" placeholder="Event name">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="eventDescription" class="form-label">Description (optional):</label>
+                                    <textarea class="form-control" id="eventDescription" rows="2"></textarea>
+                                </div>
+                                <div class="row mb-3">
+                                    <div class="col-md-6">
+                                        <label for="eventStart" class="form-label">Start Date & Time:</label>
+                                        <input type="datetime-local" class="form-control" id="eventStart">
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label for="eventEnd" class="form-label">End Date & Time:</label>
+                                        <input type="datetime-local" class="form-control" id="eventEnd">
+                                    </div>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="eventLocation" class="form-label">Location:</label>
+                                    <input type="text" class="form-control" id="eventLocation" placeholder="Venue or address">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="eventUrl" class="form-label">Event URL (optional):</label>
+                                    <input type="url" class="form-control" id="eventUrl" placeholder="https://...">
+                                </div>
+                                <button class="btn btn-primary" onclick="generateQR('event')">Generate QR Code</button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- 2D Barcode Tab -->
+                    <div class="tab-pane fade" id="v-pills-barcode" role="tabpanel">
+                        <div class="card">
+                            <div class="card-body">
+                                <h5 class="card-title">Generate 2D Barcode</h5>
+                                <div class="mb-3">
+                                    <label for="barcodeData" class="form-label">Barcode Data:</label>
+                                    <input type="text" class="form-control" id="barcodeData" placeholder="Enter data for barcode">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="barcodeType" class="form-label">Barcode Type:</label>
+                                    <select class="form-select" id="barcodeType">
+                                        <option value="CODE128">CODE128</option>
+                                        <option value="CODE39">CODE39</option>
+                                        <option value="EAN13">EAN-13</option>
+                                        <option value="UPC">UPC</option>
+                                        <option value="ITF14">ITF-14</option>
+                                    </select>
+                                </div>
+                                <button class="btn btn-primary" onclick="generateQR('barcode')">Generate Barcode</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- QR Code Display Area -->
+                <div class="card mt-4" id="qrResultCard" style="display: none;">
+                    <div class="card-body text-center">
+                        <h5 class="card-title">Your QR Code</h5>
+                        <div id="qrcode" class="mb-3"></div>
+                        <div class="d-flex justify-content-center gap-2 mb-3">
+                            <button class="btn btn-success" onclick="downloadQR('png')">Download PNG</button>
+                            <button class="btn btn-info" onclick="downloadQR('svg')">Download SVG</button>
+                            <button class="btn btn-secondary" onclick="printQR()">Print QR Code</button>
+                        </div>
+                        <div class="input-group mb-3">
+                            <input type="text" class="form-control" id="qrDataContent" readonly>
+                            <button class="btn btn-outline-secondary" onclick="copyQRData()">Copy</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add this modal at the bottom of your body (before the scripts) -->
+<div class="modal fade" id="authModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="authModalTitle">Login</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <div id="authForms">
+            <!-- Login Form -->
+            <form id="loginForm">
+              <div class="mb-3">
+                <label for="loginEmail" class="form-label">Email</label>
+                <input type="email" class="form-control" id="loginEmail" required>
+              </div>
+              <div class="mb-3">
+                <label for="loginPassword" class="form-label">Password</label>
+                <input type="password" class="form-control" id="loginPassword" required>
+              </div>
+              <button type="submit" class="btn btn-primary w-100">Login</button>
+              <div class="text-center mt-3">
+                <a href="#" class="text-decoration-none" onclick="showRegisterForm()">Create new account</a>
+              </div>
+            </form>
+  
+            <!-- Register Form -->
+            <form id="registerForm" style="display: none;">
+              <div class="mb-3">
+                <label for="registerName" class="form-label">Full Name</label>
+                <input type="text" class="form-control" id="registerName" required>
+              </div>
+              <div class="mb-3">
+                <label for="registerEmail" class="form-label">Email</label>
+                <input type="email" class="form-control" id="registerEmail" required>
+              </div>
+              <div class="mb-3">
+                <label for="registerPassword" class="form-label">Password</label>
+                <input type="password" class="form-control" id="registerPassword" required>
+              </div>
+              <div class="mb-3">
+                <label for="registerConfirmPassword" class="form-label">Confirm Password</label>
+                <input type="password" class="form-control" id="registerConfirmPassword" required>
+              </div>
+              <button type="submit" class="btn btn-primary w-100">Register</button>
+              <div class="text-center mt-3">
+                <a href="#" class="text-decoration-none" onclick="showLoginForm()">Already have an account? Login</a>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Add this to your header/navigation -->
+  <nav class="navbar navbar-expand-lg navbar-light bg-light mb-4">
+    <div class="container">
+      <a class="navbar-brand" href="#">QR Generator</a>
+      <div class="d-flex">
+        <div id="authButtons">
+          <button class="btn btn-outline-primary me-2" onclick="showLoginModal()">Login</button>
+          <button class="btn btn-primary" onclick="showRegisterModal()">Sign Up</button>
+        </div>
+        <div id="userProfile" style="display: none;">
+          <div class="dropdown">
+            <button class="btn btn-secondary dropdown-toggle" type="button" id="userDropdown" data-bs-toggle="dropdown">
+              <span id="userGreeting"></span>
+            </button>
+            <ul class="dropdown-menu">
+              <li><a class="dropdown-item" href="#" onclick="showSavedQRCodes()">My QR Codes</a></li>
+              <li><hr class="dropdown-divider"></li>
+              <li><a class="dropdown-item" href="#" onclick="logout()">Logout</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+    <footer class="bg-light text-center py-3 mt-5">
+        <div class="container">
+            <p class="mb-0">QR Code Generator &copy; 2023 | All Rights Reserved</p>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.1/build/qrcode.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.5/dist/JsBarcode.all.min.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
