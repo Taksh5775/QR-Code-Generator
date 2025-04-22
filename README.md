@@ -1,5 +1,5 @@
-Overview
-This is a comprehensive QR code generator web application that allows users to create customized QR codes for various purposes including URLs, text, contact information, WiFi credentials, and more. The application features user authentication, QR code customization, and the ability to save generated QR codes to user accounts.
+###Overview
+#####This is a comprehensive QR code generator web application that allows users to create customized QR codes for various purposes including URLs, text, contact information, WiFi credentials, and more. The application features user authentication, QR code customization, and the ability to save generated QR codes to user accounts.
 
 Features
 QR Code Generation
